@@ -1,5 +1,7 @@
 using Godot;
+using IslebyIsle.features.interaction;
 using System;
+using System.Collections.Generic;
 
 public partial class Player : CharacterBody3D
 {
@@ -9,6 +11,9 @@ public partial class Player : CharacterBody3D
 	public float Deceleration = 20f;
 	[Export]
 	public Node3D CameraRig { get; set; }
+
+	public Tool EquippedTool { get; set; } = new Tool();
+	public readonly List<IInteractable> nearbyInteractables = new();
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -50,5 +55,40 @@ public partial class Player : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+
+		if (Input.IsActionJustPressed("interact"))
+		{
+			double closest = Constants.MaxInteractDistance;
+			IInteractable closestInteractable = null;
+			foreach (IInteractable interactable in nearbyInteractables)
+			{
+				if (GlobalPosition.DistanceTo(interactable.GlobalPosition) < closest)
+				{
+					closestInteractable = interactable;
+					closest = GlobalPosition.DistanceTo(interactable.GlobalPosition);
+				}
+			}
+
+			if (closestInteractable != null)
+			{
+				closestInteractable.Interact(this);
+			}
+		}
+	}
+
+	public void RegisterInteractable(IInteractable interactable)
+	{
+		if (!nearbyInteractables.Contains(interactable))
+		{
+			nearbyInteractables.Add(interactable);
+		}
+	}
+
+	public void UnregisterInteractable(IInteractable interactable)
+	{
+		if (nearbyInteractables.Contains(interactable))
+		{
+			nearbyInteractables.Remove(interactable);
+		}
 	}
 }
