@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b6n1e0lb4m44"]
+
+[ext_resource type="Script" uid="uid://cmw8dcoulrvad" path="res://features/world/WildFlower.cs" id="1_q031g"]
+[ext_resource type="Resource" uid="uid://c2m3351u72f1n" path="res://data/gatherables/wild_flower.tres" id="2_la4h4"]
+[ext_resource type="PackedScene" uid="uid://cat25kiet1dba" path="res://assets/wild_plants/mdvl_nature_flowers_01.glb" id="3_pbmp0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_la4h4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0gy4y"]
+
+[node name="Wild Flower" type="StaticBody3D" unique_id=291574329 node_paths=PackedStringArray("Mesh", "Collision", "Area")]
+script = ExtResource("1_q031g")
+Data = ExtResource("2_la4h4")
+Mesh = NodePath("mdvl_nature_flowers_012")
+Collision = NodePath("CollisionShape3D")
+Area = NodePath("InteractionArea")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=259908923]
+shape = SubResource("BoxShape3D_la4h4")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=1510809155]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=1046081997]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_0gy4y")
+
+[node name="mdvl_nature_flowers_012" parent="." unique_id=709551445 instance=ExtResource("3_pbmp0")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, -0.5, 0)
+
+[connection signal="body_entered" from="InteractionArea" to="." method="body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="body_exited"]
