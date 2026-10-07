@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://cnmac5726sxfk" path="res://assets/trees/Tree_1_A_Color1.gltf" id="2_7x0rq"]
 [ext_resource type="PackedScene" uid="uid://bf8a46nvsj42b" path="res://assets/trees/Tree_1_B_Color1.gltf" id="3_lu1ld"]
 [ext_resource type="PackedScene" uid="uid://cat25kiet1dba" path="res://assets/wild_plants/mdvl_nature_flowers_01.glb" id="4_lu1ld"]
+[ext_resource type="PackedScene" uid="uid://b6n1e0lb4m44" path="res://features/world/wild_flower.tscn" id="5_vix52"]
+[ext_resource type="FontFile" uid="uid://do8aeo1lkksy4" path="res://assets/fonts/Fredoka-VariableFont_wdth,wght.ttf" id="6_judxy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7x0rq"]
 sky_top_color = Color(0.5294118, 0.80784315, 0.92156863, 1)
@@ -29,6 +31,15 @@ size = Vector3(12, 0.33720702, 12)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kplcx"]
 size = Vector3(12, 0.4, 12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ncf1b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4suka"]
+font = ExtResource("6_judxy")
+font_size = 24
+outline_size = 4
+outline_color = Color(0.0012720084, 0.0010619679, 0.000741399, 1)
+shadow_size = 3
 
 [node name="Main" type="Node" unique_id=260558800]
 
@@ -58,8 +69,9 @@ mesh = SubResource("BoxMesh_pia53")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Island/Ground" unique_id=430852102]
 shape = SubResource("BoxShape3D_kplcx")
 
-[node name="Player" parent="." unique_id=30541234 instance=ExtResource("1_5dtan")]
+[node name="Player" parent="." unique_id=30541234 node_paths=PackedStringArray("InteractionLabel") instance=ExtResource("1_5dtan")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+InteractionLabel = NodePath("../UI/InteractionLabel")
 
 [node name="Tree_1_A_Color12" parent="." unique_id=1875022408 instance=ExtResource("2_7x0rq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, -1.304)
@@ -69,3 +81,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 2)
 
 [node name="mdvl_nature_flowers_012" parent="." unique_id=709551445 instance=ExtResource("4_lu1ld")]
 transform = Transform3D(2.4826648, -0.19814216, 0.21706021, 0.21706021, 2.4810097, -0.21788934, -0.19814216, 0.23522453, 2.4810097, 0, 0, 2.3993144)
+
+[node name="Wild Flower" parent="." unique_id=291574329 instance=ExtResource("5_vix52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.65, 0.5, -0.679)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1620069469]
+
+[node name="InteractionLabel" type="Label" parent="UI" unique_id=954601293]
+material = SubResource("CanvasItemMaterial_ncf1b")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_4suka")

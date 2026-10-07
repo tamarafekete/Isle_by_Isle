@@ -14,6 +14,7 @@ public partial class Player : CharacterBody3D
 
 	public Tool EquippedTool { get; set; } = new Tool();
 	public readonly List<IInteractable> nearbyInteractables = new();
+	[Export] public Label InteractionLabel;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -55,25 +56,32 @@ public partial class Player : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
-
+		
+		var closestInteractable = GetNearestInteractable();
+		InteractionLabel.Text = closestInteractable?.GetPrompt() ?? "";
+		
 		if (Input.IsActionJustPressed("interact"))
 		{
-			double closest = Constants.MaxInteractDistance;
-			IInteractable closestInteractable = null;
-			foreach (IInteractable interactable in nearbyInteractables)
-			{
-				if (GlobalPosition.DistanceTo(interactable.GlobalPosition) < closest)
-				{
-					closestInteractable = interactable;
-					closest = GlobalPosition.DistanceTo(interactable.GlobalPosition);
-				}
-			}
-
 			if (closestInteractable != null)
 			{
 				closestInteractable.Interact(this);
 			}
 		}
+	}
+	
+	private IInteractable GetNearestInteractable()
+	{
+		double closest = Constants.MaxInteractDistance;
+		IInteractable closestInteractable = null;
+		foreach (IInteractable interactable in nearbyInteractables)
+		{
+			if (GlobalPosition.DistanceTo(interactable.GlobalPosition) < closest)
+			{
+				closestInteractable = interactable;
+				closest = GlobalPosition.DistanceTo(interactable.GlobalPosition);
+			}
+		}
+		return  closestInteractable;
 	}
 
 	public void RegisterInteractable(IInteractable interactable)

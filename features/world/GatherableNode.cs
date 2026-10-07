@@ -56,7 +56,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
             }
             else
             {
-                GD.PrintErr("No hit data configured for tier {player.EquippedTool.Tier}");
+                GD.PrintErr($"No hit data configured for tier {player.EquippedTool.Tier}");
             }
             
         }
