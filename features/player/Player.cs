@@ -13,9 +13,22 @@ public partial class Player : CharacterBody3D
 	public Node3D CameraRig { get; set; }
 
 	public Tool EquippedTool { get; set; } = new Tool();
-	public readonly List<IInteractable> nearbyInteractables = new();
+	public readonly List<IInteractable> NearbyInteractables = new();
 	[Export] public Label InteractionLabel;
+	[Export] public Label ErrorLabel;
 	[Export] public ProgressBar GatherProgressBar;
+	private Timer _errorTimer;
+
+	public override void _Ready()
+	{
+		_errorTimer = new Timer();
+		_errorTimer.OneShot = true;
+		AddChild(_errorTimer);
+		_errorTimer.Timeout += OnErrorEnded;
+		_errorTimer.WaitTime = Constants.ErrorMessageLasts;
+	}
+	
+	
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -89,7 +102,7 @@ public partial class Player : CharacterBody3D
 	{
 		double closest = Constants.MaxInteractDistance;
 		IInteractable closestInteractable = null;
-		foreach (IInteractable interactable in nearbyInteractables)
+		foreach (IInteractable interactable in NearbyInteractables)
 		{
 			if (GlobalPosition.DistanceTo(interactable.GlobalPosition) < closest)
 			{
@@ -102,17 +115,28 @@ public partial class Player : CharacterBody3D
 
 	public void RegisterInteractable(IInteractable interactable)
 	{
-		if (!nearbyInteractables.Contains(interactable))
+		if (!NearbyInteractables.Contains(interactable))
 		{
-			nearbyInteractables.Add(interactable);
+			NearbyInteractables.Add(interactable);
 		}
 	}
 
 	public void UnregisterInteractable(IInteractable interactable)
 	{
-		if (nearbyInteractables.Contains(interactable))
+		if (NearbyInteractables.Contains(interactable))
 		{
-			nearbyInteractables.Remove(interactable);
+			NearbyInteractables.Remove(interactable);
 		}
+	}
+	
+	public void WriteError(string message)
+	{
+		ErrorLabel.Text = message;
+		_errorTimer.Start();
+	}
+
+	private void OnErrorEnded()
+	{
+		ErrorLabel.Text = string.Empty;
 	}
 }

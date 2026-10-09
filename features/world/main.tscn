@@ -33,9 +33,18 @@ size = Vector3(12, 0.4, 12)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ncf1b"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_vix52"]
+font = ExtResource("6_judxy")
+font_size = 24
+font_color = Color(1, 0.90668744, 0.88584906, 1)
+outline_size = 4
+outline_color = Color(0.0012720084, 0.0010619679, 0.000741399, 1)
+shadow_size = 3
+
 [sub_resource type="LabelSettings" id="LabelSettings_4suka"]
 font = ExtResource("6_judxy")
 font_size = 24
+font_color = Color(0.8880339, 0.17138553, 4.4087767e-05, 1)
 outline_size = 4
 outline_color = Color(0.0012720084, 0.0010619679, 0.000741399, 1)
 shadow_size = 3
@@ -96,10 +105,11 @@ mesh = SubResource("BoxMesh_pia53")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Island/Ground" unique_id=430852102]
 shape = SubResource("BoxShape3D_kplcx")
 
-[node name="Player" parent="." unique_id=30541234 node_paths=PackedStringArray("CameraRig", "InteractionLabel", "GatherProgressBar") instance=ExtResource("1_5dtan")]
+[node name="Player" parent="." unique_id=30541234 node_paths=PackedStringArray("CameraRig", "InteractionLabel", "ErrorLabel", "GatherProgressBar") instance=ExtResource("1_5dtan")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 CameraRig = NodePath("../CameraRig")
 InteractionLabel = NodePath("../UI/InteractionLabel")
+ErrorLabel = NodePath("../UI/ErrorLabel")
 GatherProgressBar = NodePath("../UI/GatherProgressBar")
 
 [node name="Wild Flower2" parent="." unique_id=291574329 instance=ExtResource("5_vix52")]
@@ -120,6 +130,21 @@ anchor_bottom = 1.0
 offset_left = -20.0
 offset_top = -23.0
 offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_vix52")
+
+[node name="ErrorLabel" type="Label" parent="UI" unique_id=61516427]
+material = SubResource("CanvasItemMaterial_ncf1b")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -30.0
 grow_horizontal = 2
 grow_vertical = 0
 label_settings = SubResource("LabelSettings_4suka")

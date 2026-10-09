@@ -1,4 +1,3 @@
-using System.Threading.Tasks.Dataflow;
 using Godot;
 using IslebyIsle.features.interaction;
 
@@ -33,15 +32,15 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 	{
 		if (!_isRespawning && player != null)
 		{
-			if (player.EquippedTool.Type != Data.ToolType && !(Data.MinToolTier == ToolTier.Hand && player.EquippedTool.Tier == ToolTier.Hand))
+			if(Data.ToolType != ToolType.None && player.EquippedTool.Type != Data.ToolType)
 			{
-				GD.PrintErr("Can't interact with other tools");
+				player.WriteError("Can't interact with other tools");
 				return;
 			}
 
 			if (player.EquippedTool.Tier < Data.MinToolTier)
 			{
-				GD.PrintErr("Tool is not strong enough");
+				player.WriteError("Tool is not strong enough");
 				return;
 			}
 
@@ -58,7 +57,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 			}
 			else
 			{
-				GD.PrintErr($"No hit data configured for tier {player.EquippedTool.Tier}");
+				player.WriteError($"No hit data configured for tier {player.EquippedTool.Tier}");
 			}
 			
 		}
