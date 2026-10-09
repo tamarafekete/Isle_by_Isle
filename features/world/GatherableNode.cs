@@ -1,3 +1,4 @@
+using System.Threading.Tasks.Dataflow;
 using Godot;
 using IslebyIsle.features.interaction;
 
@@ -9,6 +10,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 
 	private double _hitsRemaining = Constants.FullProgress;
 	private bool _isRespawning = false;
+	public double HitsRemaining => _hitsRemaining;
 	private Timer _respawnTimer;
 	[Export] public Node3D Mesh;
 	[Export] public CollisionShape3D Collision;
@@ -31,7 +33,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 	{
 		if (!_isRespawning && player != null)
 		{
-			if (player.EquippedTool.Type != Data.ToolType)
+			if (player.EquippedTool.Type != Data.ToolType && !(Data.MinToolTier == ToolTier.Hand && player.EquippedTool.Tier == ToolTier.Hand))
 			{
 				GD.PrintErr("Can't interact with other tools");
 				return;

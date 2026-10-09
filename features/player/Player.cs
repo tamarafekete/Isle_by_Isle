@@ -2,6 +2,7 @@ using Godot;
 using IslebyIsle.features.interaction;
 using System;
 using System.Collections.Generic;
+using IslebyIsle.features.world;
 
 public partial class Player : CharacterBody3D
 {
@@ -15,6 +16,7 @@ public partial class Player : CharacterBody3D
 	public Tool EquippedTool { get; set; } = new Tool();
 	public readonly List<IInteractable> nearbyInteractables = new();
 	[Export] public Label InteractionLabel;
+	[Export] public ProgressBar GatherProgressBar;
 
 	public override void _PhysicsProcess(double delta)
 	{
@@ -25,8 +27,8 @@ public partial class Player : CharacterBody3D
 		{
 			velocity += GetGravity() * (float)delta;
 		}
-		
-		
+
+
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
@@ -36,6 +38,7 @@ public partial class Player : CharacterBody3D
 		{
 			direction = direction.Rotated(Vector3.Up, CameraRig.Rotation.Y);
 		}
+
 		direction = direction.Normalized();
 		if (direction != Vector3.Zero)
 		{
@@ -47,18 +50,20 @@ public partial class Player : CharacterBody3D
 			velocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration * (float)delta);
 			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Deceleration * (float)delta);
 		}
+
 		if (direction.Length() > 0.1f)
 		{
 			float targetAngle = Mathf.Atan2(direction.X, direction.Z);
-			Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, targetAngle, 10f * (float)delta), Rotation.Z);
+			Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, targetAngle, 10f * (float)delta),
+				Rotation.Z);
 		}
 
 		Velocity = velocity;
 		MoveAndSlide();
-		
+
 		var closestInteractable = GetNearestInteractable();
 		InteractionLabel.Text = closestInteractable?.GetPrompt() ?? "";
-		
+
 		if (Input.IsActionJustPressed("interact"))
 		{
 			if (closestInteractable != null)
@@ -66,8 +71,21 @@ public partial class Player : CharacterBody3D
 				closestInteractable.Interact(this);
 			}
 		}
+		
+		if (closestInteractable is GatherableNode gatherable && (gatherable.HitsRemaining < Constants.FullProgress && gatherable.HitsRemaining > 0))
+		{
+			Vector2 screenPos = GetViewport().GetCamera3D().UnprojectPosition(gatherable.GlobalPosition);
+			GatherProgressBar.Position = screenPos;
+			GatherProgressBar.Visible = true;
+			GatherProgressBar.Value = 100.0 - gatherable.HitsRemaining; 
+		}
+		else
+		{
+			GatherProgressBar.Visible = false;
+		}
+
 	}
-	
+
 	private IInteractable GetNearestInteractable()
 	{
 		double closest = Constants.MaxInteractDistance;

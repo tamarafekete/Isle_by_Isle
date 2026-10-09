@@ -11,7 +11,7 @@ public class Tool
     public Tool()
     {
         Tier = ToolTier.Hand;
-        Type = ToolType.None;
+        Type = ToolType.Axe;
         Name = "None";
     }
 }
