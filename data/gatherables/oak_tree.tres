@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="GatherableData" format=3 uid="uid://ctihfwfqwjbyd"]
+
+[ext_resource type="Script" uid="uid://rg5lhbfhaoki" path="res://features/interaction/GatherableData.cs" id="1_getqq"]
+
+[resource]
+script = ExtResource("1_getqq")
+ResourceName = "Oak Tree"
+ToolType = 1
+HitsRequired = Dictionary[int, int]({
+0: 6
+})
+AmountGiven = 3
+RespawnSeconds = 20.0
+metadata/_custom_type_script = "uid://rg5lhbfhaoki"

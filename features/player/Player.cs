@@ -1,6 +1,5 @@
 using Godot;
 using IslebyIsle.features.interaction;
-using System;
 using System.Collections.Generic;
 using IslebyIsle.features.world;
 

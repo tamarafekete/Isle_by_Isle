@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://brw7bfrmddj81"]
+
+[ext_resource type="Script" uid="uid://c18uutc5wo7ph" path="res://features/world/SmallRock.cs" id="1_2hbca"]
+[ext_resource type="PackedScene" uid="uid://b5406rfmmsjwn" path="res://assets/rocks/Rock_3_I_Color1.gltf" id="2_2hbca"]
+[ext_resource type="Resource" uid="uid://cubrn2m8g15ge" path="res://data/gatherables/small_rock.tres" id="2_nbnvk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ncf1b"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4suka"]
+
+[node name="Small Rock" type="StaticBody3D" unique_id=1963391282 node_paths=PackedStringArray("Mesh", "Collision", "Area")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("1_2hbca")
+Data = ExtResource("2_nbnvk")
+Mesh = NodePath("Rock_3_I_Color12")
+Collision = NodePath("CollisionShape3D")
+Area = NodePath("InteractionArea")
+
+[node name="Rock_3_I_Color12" parent="." unique_id=1717023445 instance=ExtResource("2_2hbca")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1244596051]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("SphereShape3D_ncf1b")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=1145427293]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=95798583]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+shape = SubResource("SphereShape3D_4suka")
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
