@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://dph08l3p03jjj"]
 
 [ext_resource type="PackedScene" uid="uid://tu1fnmgq5qpr" path="res://features/player/Player.tscn" id="1_5dtan"]
-[ext_resource type="PackedScene" uid="uid://cnmac5726sxfk" path="res://assets/trees/Tree_1_A_Color1.gltf" id="2_7x0rq"]
-[ext_resource type="PackedScene" uid="uid://bf8a46nvsj42b" path="res://assets/trees/Tree_1_B_Color1.gltf" id="3_lu1ld"]
+[ext_resource type="PackedScene" uid="uid://b1uahqwk5u5wp" path="res://features/world/oak_tree.tscn" id="5_judxy"]
+[ext_resource type="PackedScene" uid="uid://brw7bfrmddj81" path="res://features/world/small_rock.tscn" id="5_kdunv"]
+[ext_resource type="PackedScene" uid="uid://b6n1e0lb4m44" path="res://features/world/wild_flower.tscn" id="5_vix52"]
+[ext_resource type="FontFile" uid="uid://do8aeo1lkksy4" path="res://assets/fonts/Fredoka-VariableFont_wdth,wght.ttf" id="6_judxy"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7x0rq"]
 sky_top_color = Color(0.5294118, 0.80784315, 0.92156863, 1)
@@ -28,6 +30,52 @@ size = Vector3(12, 0.33720702, 12)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kplcx"]
 size = Vector3(12, 0.4, 12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ncf1b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vix52"]
+font = ExtResource("6_judxy")
+font_size = 24
+font_color = Color(1, 0.90668744, 0.88584906, 1)
+outline_size = 4
+outline_color = Color(0.0012720084, 0.0010619679, 0.000741399, 1)
+shadow_size = 3
+
+[sub_resource type="LabelSettings" id="LabelSettings_4suka"]
+font = ExtResource("6_judxy")
+font_size = 24
+font_color = Color(0.8880339, 0.17138553, 4.4087767e-05, 1)
+outline_size = 4
+outline_color = Color(0.0012720084, 0.0010619679, 0.000741399, 1)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lu1ld"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22094142, 0.22094145, 0.22094128, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdunv"]
+bg_color = Color(0.30588236, 0.6862745, 0.32156864, 0.99215686)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 1
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
 
 [node name="Main" type="Node" unique_id=260558800]
 
@@ -57,11 +105,60 @@ mesh = SubResource("BoxMesh_pia53")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Island/Ground" unique_id=430852102]
 shape = SubResource("BoxShape3D_kplcx")
 
-[node name="Player" parent="." unique_id=30541234 instance=ExtResource("1_5dtan")]
+[node name="Player" parent="." unique_id=30541234 node_paths=PackedStringArray("CameraRig", "InteractionLabel", "ErrorLabel", "GatherProgressBar") instance=ExtResource("1_5dtan")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+CameraRig = NodePath("../CameraRig")
+InteractionLabel = NodePath("../UI/InteractionLabel")
+ErrorLabel = NodePath("../UI/ErrorLabel")
+GatherProgressBar = NodePath("../UI/GatherProgressBar")
 
-[node name="Tree_1_A_Color12" parent="." unique_id=1875022408 instance=ExtResource("2_7x0rq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, -1.304)
+[node name="Wild Flower2" parent="." unique_id=291574329 instance=ExtResource("5_vix52")]
+transform = Transform3D(0.99306595, -0.07925686, 0.086824074, 0.08682408, 0.9924039, -0.087155744, -0.079256855, 0.09408982, 0.9924039, 0, 0.5, 2.399)
 
-[node name="Tree_1_B_Color12" parent="." unique_id=1830060975 instance=ExtResource("3_lu1ld")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.5, 2)
+[node name="Wild Flower" parent="." unique_id=444647003 instance=ExtResource("5_vix52")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.65, 0.5, -0.679)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1620069469]
+
+[node name="InteractionLabel" type="Label" parent="UI" unique_id=954601293]
+material = SubResource("CanvasItemMaterial_ncf1b")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_vix52")
+
+[node name="ErrorLabel" type="Label" parent="UI" unique_id=61516427]
+material = SubResource("CanvasItemMaterial_ncf1b")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_4suka")
+
+[node name="GatherProgressBar" type="ProgressBar" parent="UI" unique_id=665642254]
+visible = false
+offset_right = 75.0
+offset_bottom = 15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_lu1ld")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kdunv")
+show_percentage = false
+
+[node name="Oak Tree" parent="." unique_id=1835151400 instance=ExtResource("5_judxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.85, -3)
+
+[node name="Small Rock" parent="." unique_id=1963391282 instance=ExtResource("5_kdunv")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3.137, 0, 3.797)

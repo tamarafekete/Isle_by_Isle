@@ -11,16 +11,16 @@ Log every third-party asset the moment you add it to the project. Reconstructing
 
 ## Assets
 
-| Asset or pack                  | Type      | Author      | Source URL  | License | Attribution required? | Used in      | Date added |
-| ------------------------------ | --------- | ----------- | ----------- | ------- | --------------------- | ------------ | ---------- |
-| (example) Stylized Nature Pack | 3D models | Author name | https://... | CC0     | No                    | Trees, rocks | YYYY-MM-DD |
+| Asset or pack                  | Type      | Author      | Source URL                         | License | Attribution required? | Used in      | Date added |
+| ------------------------------ | --------- | ----------- | ---------------------------------- | ------- | --------------------- | ------------ | ---------- |
+| (example) Stylized Nature Pack | 3D models | Author name | https://...                        | CC0     | No                    | Trees, rocks | YYYY-MM-DD |
+| Fredoka font                   | fonts     | OFL         | https://fonts.google.com/selection | CC0     | Fonts                 | 07.10.2026   |
 
 ## Tools and engine
 
 | Tool                      | Version | License |
 | ------------------------- | ------- | ------- |
 | Godot Engine (.NET build) | 4.7.2   | MIT     |
-
 
 ## In-game credits text (draft)
 
