@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://bocroao47qe4b"]
+
+[ext_resource type="Script" uid="uid://dkra7b0uot2cs" path="res://features/inventory/ItemData.cs" id="1_nrqy1"]
+
+[resource]
+script = ExtResource("1_nrqy1")
+Name = "Stone"
+metadata/_custom_type_script = "uid://dkra7b0uot2cs"

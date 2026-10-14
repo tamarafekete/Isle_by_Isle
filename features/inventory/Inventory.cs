@@ -60,7 +60,7 @@ public class Inventory
     {
         foreach (InventorySlot slot in Slots)
         {
-            GD.Print("Item: " + slot.Item + " Count: " + slot.Count);
+            GD.Print("Item: " + slot.Item?.Name + " Count: " + slot.Count);
         }
     }
 
