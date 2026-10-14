@@ -1,6 +1,7 @@
 using Godot;
 using IslebyIsle.features.interaction;
 using System.Collections.Generic;
+using IslebyIsle.features.inventory;
 using IslebyIsle.features.world;
 
 public partial class Player : CharacterBody3D
@@ -19,6 +20,8 @@ public partial class Player : CharacterBody3D
 	[Export] public ProgressBar GatherProgressBar;
 	private Timer _errorTimer;
 
+	public Inventory Inventory { get; } = new Inventory(28);
+
 	public override void _Ready()
 	{
 		_errorTimer = new Timer();
@@ -33,17 +36,12 @@ public partial class Player : CharacterBody3D
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
-
-		// Add the gravity.
+		
 		if (!IsOnFloor())
 		{
 			velocity += GetGravity() * (float)delta;
 		}
 
-
-
-		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
 		Vector3 direction = new Vector3(inputDir.X, 0, inputDir.Y);
 		if (CameraRig != null)

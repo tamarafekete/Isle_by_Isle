@@ -44,12 +44,14 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 				return;
 			}
 
-			if (Data.HitsRequired.TryGetValue(player.EquippedTool.Tier, out var amountGiven))
+			if (Data.HitsRequired.TryGetValue(player.EquippedTool.Tier, out var hitNeeded))
 			{
-				_hitsRemaining-=(Constants.FullProgress/amountGiven);
+				_hitsRemaining-=(Constants.FullProgress/hitNeeded);
 				if (_hitsRemaining <= 0)
 				{
 					GD.Print("You got the resource");
+					player.Inventory.AddItem(Data.ItemGiven, Data.AmountGiven);
+					player.Inventory.PrintInventory();
 					OnHarvested();
 					_isRespawning = true;
 					_respawnTimer.Start();
