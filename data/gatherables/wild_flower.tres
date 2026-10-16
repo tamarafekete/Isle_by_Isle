@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="GatherableData" format=3 uid="uid://c2m3351u72f1n"]
 
 [ext_resource type="Script" uid="uid://rg5lhbfhaoki" path="res://features/interaction/GatherableData.cs" id="1_ej8f5"]
+[ext_resource type="Resource" uid="uid://df7w21shehmwo" path="res://data/items/wild_flower.tres" id="1_yfn54"]
 
 [resource]
 script = ExtResource("1_ej8f5")
-ResourceName = "Wild Flower"
+ItemGiven = ExtResource("1_yfn54")
 HitsRequired = Dictionary[int, int]({
 0: 1
 })

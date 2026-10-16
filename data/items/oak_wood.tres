@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b3jnxs5mdphvj"]
+
+[ext_resource type="Script" uid="uid://dkra7b0uot2cs" path="res://features/inventory/ItemData.cs" id="1_6fvsk"]
+
+[resource]
+script = ExtResource("1_6fvsk")
+Name = "Oak Wood"
+metadata/_custom_type_script = "uid://dkra7b0uot2cs"

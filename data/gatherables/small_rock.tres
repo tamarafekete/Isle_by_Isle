@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="GatherableData" format=3 uid="uid://cubrn2m8g15ge"]
+
+[ext_resource type="Resource" uid="uid://bocroao47qe4b" path="res://data/items/stone.tres" id="1_1aesm"]
+[ext_resource type="Script" uid="uid://rg5lhbfhaoki" path="res://features/interaction/GatherableData.cs" id="1_m2wmq"]
+
+[resource]
+script = ExtResource("1_m2wmq")
+ItemGiven = ExtResource("1_1aesm")
+ToolType = 2
+HitsRequired = Dictionary[int, int]({
+1: 2
+})
+MinToolTier = 1
+RespawnSeconds = 15.0
+metadata/_custom_type_script = "uid://rg5lhbfhaoki"
