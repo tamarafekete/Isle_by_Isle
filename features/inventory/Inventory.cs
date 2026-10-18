@@ -3,9 +3,10 @@ using Godot;
 
 namespace IslebyIsle.features.inventory;
 
-public class Inventory
+public partial class Inventory : GodotObject
 {
     public List<InventorySlot> Slots { get; set; }
+    [Signal] public delegate void InventoryChangedEventHandler();
     
     public Inventory(int size)
     {
@@ -29,6 +30,8 @@ public class Inventory
         {
             remaining = slot.AddItem(item, remaining);
         }
+
+        EmitSignal(SignalName.InventoryChanged);
         return remaining;
     }
 

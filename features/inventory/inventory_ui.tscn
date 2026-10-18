@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c6petplbdv0jh"]
+
+[node name="InventoryUI" type="Control" unique_id=1648606664]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1817746688]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HotBarContainer" type="GridContainer" parent="." unique_id=5937492]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

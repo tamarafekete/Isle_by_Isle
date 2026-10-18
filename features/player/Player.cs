@@ -20,7 +20,8 @@ public partial class Player : CharacterBody3D
 	[Export] public ProgressBar GatherProgressBar;
 	private Timer _errorTimer;
 
-	public Inventory Inventory { get; } = new Inventory(28);
+	public Inventory Inventory { get; } = new Inventory(InventoryConstants.HotBarSize + InventoryConstants.BackPackSize);
+	[Export] public InventoryUI InventoryUI { get; set; }
 
 	public override void _Ready()
 	{
@@ -29,6 +30,7 @@ public partial class Player : CharacterBody3D
 		AddChild(_errorTimer);
 		_errorTimer.Timeout += OnErrorEnded;
 		_errorTimer.WaitTime = Constants.ErrorMessageLasts;
+		InventoryUI.Initialize(Inventory);
 	}
 	
 	
@@ -92,6 +94,11 @@ public partial class Player : CharacterBody3D
 		else
 		{
 			GatherProgressBar.Visible = false;
+		}
+
+		if (Input.IsActionJustPressed("toggle_inventory"))
+		{
+			InventoryUI.GridContainer.Visible = !InventoryUI.GridContainer.Visible;
 		}
 
 	}
