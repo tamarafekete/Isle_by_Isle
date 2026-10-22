@@ -21,7 +21,8 @@ public partial class Player : CharacterBody3D
 	private Timer _errorTimer;
 
 	public Inventory Inventory { get; } = new Inventory(InventoryConstants.HotBarSize + InventoryConstants.BackPackSize);
-	[Export] public InventoryUI InventoryUI { get; set; }
+	[Export] public InventoryUi InventoryUi { get; set; }
+	private bool _inventoryOpen = false;
 
 	public override void _Ready()
 	{
@@ -30,11 +31,16 @@ public partial class Player : CharacterBody3D
 		AddChild(_errorTimer);
 		_errorTimer.Timeout += OnErrorEnded;
 		_errorTimer.WaitTime = Constants.ErrorMessageLasts;
-		InventoryUI.Initialize(Inventory);
+		InventoryUi.Initialize(Inventory);
+		InventoryUi.InventoryPanel.Visible = false;
+	}
+
+	private void ToggleInventory(bool toggle = true)
+	{
+		_inventoryOpen= toggle;
+		InventoryUi.InventoryPanel.Visible = toggle;
 	}
 	
-	
-
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
@@ -44,61 +50,77 @@ public partial class Player : CharacterBody3D
 			velocity += GetGravity() * (float)delta;
 		}
 
-		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-		Vector3 direction = new Vector3(inputDir.X, 0, inputDir.Y);
-		if (CameraRig != null)
+		if (!_inventoryOpen)
 		{
-			direction = direction.Rotated(Vector3.Up, CameraRig.Rotation.Y);
-		}
-
-		direction = direction.Normalized();
-		if (direction != Vector3.Zero)
-		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
-		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration * (float)delta);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Deceleration * (float)delta);
-		}
-
-		if (direction.Length() > 0.1f)
-		{
-			float targetAngle = Mathf.Atan2(direction.X, direction.Z);
-			Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, targetAngle, 10f * (float)delta),
-				Rotation.Z);
-		}
-
-		Velocity = velocity;
-		MoveAndSlide();
-
-		var closestInteractable = GetNearestInteractable();
-		InteractionLabel.Text = closestInteractable?.GetPrompt() ?? "";
-
-		if (Input.IsActionJustPressed("interact"))
-		{
-			if (closestInteractable != null)
+			Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
+			Vector3 direction = new Vector3(inputDir.X, 0, inputDir.Y);
+			if (CameraRig != null)
 			{
-				closestInteractable.Interact(this);
+				direction = direction.Rotated(Vector3.Up, CameraRig.Rotation.Y);
 			}
-		}
+
+			direction = direction.Normalized();
+			if (direction != Vector3.Zero)
+			{
+				velocity.X = direction.X * Speed;
+				velocity.Z = direction.Z * Speed;
+			}
+			else
+			{
+				velocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration * (float)delta);
+				velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Deceleration * (float)delta);
+			}
+
+			if (direction.Length() > 0.1f)
+			{
+				float targetAngle = Mathf.Atan2(direction.X, direction.Z);
+				Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, targetAngle, 10f * (float)delta),
+					Rotation.Z);
+			}
+
+			Velocity = velocity;
+			MoveAndSlide();
+
+			var closestInteractable = GetNearestInteractable();
+			InteractionLabel.Text = closestInteractable?.GetPrompt() ?? "";
+
+			if (Input.IsActionJustPressed("interact"))
+			{
+				if (closestInteractable != null)
+				{
+					closestInteractable.Interact(this);
+				}
+			}
 		
-		if (closestInteractable is GatherableNode gatherable && (gatherable.HitsRemaining < Constants.FullProgress && gatherable.HitsRemaining > 0))
-		{
-			Vector2 screenPos = GetViewport().GetCamera3D().UnprojectPosition(gatherable.GlobalPosition);
-			GatherProgressBar.Position = screenPos;
-			GatherProgressBar.Visible = true;
-			GatherProgressBar.Value = 100.0 - gatherable.HitsRemaining; 
-		}
-		else
-		{
-			GatherProgressBar.Visible = false;
+			if (closestInteractable is GatherableNode gatherable && (gatherable.HitsRemaining < Constants.FullProgress && gatherable.HitsRemaining > 0))
+			{
+				Vector2 screenPos = GetViewport().GetCamera3D().UnprojectPosition(gatherable.GlobalPosition);
+				GatherProgressBar.Position = screenPos;
+				GatherProgressBar.Visible = true;
+				GatherProgressBar.Value = 100.0 - gatherable.HitsRemaining; 
+			}
+			else
+			{
+				GatherProgressBar.Visible = false;
+			}
 		}
 
 		if (Input.IsActionJustPressed("toggle_inventory"))
 		{
-			InventoryUI.GridContainer.Visible = !InventoryUI.GridContainer.Visible;
+			ToggleInventory();
+		}
+
+		if (Input.IsActionJustPressed("close_inventory"))
+		{
+			ToggleInventory(false);
+		}
+
+		for (Key i = Key.Key1; i <= Key.Key8; i++)
+		{
+			if (Input.IsKeyPressed(i))
+			{
+				InventoryUi.SetActive((int)i - (int)Key.Key1);
+			}
 		}
 
 	}

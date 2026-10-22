@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bhbenxjtwj2eh" path="res://features/player/Player.cs" id="1_yrnqm"]
 [ext_resource type="PackedScene" uid="uid://crvuotenx5gre" path="res://assets/characters/Rogue.glb" id="2_mjcdy"]
+[ext_resource type="PackedScene" uid="uid://c6petplbdv0jh" path="res://features/inventory/inventory_ui.tscn" id="3_u46th"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ncf1b"]
 
@@ -9,8 +10,9 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pbmp0"]
 
-[node name="Player" type="CharacterBody3D" unique_id=30541234]
+[node name="Player" type="CharacterBody3D" unique_id=30541234 node_paths=PackedStringArray("InventoryUi")]
 script = ExtResource("1_yrnqm")
+InventoryUi = NodePath("InventoryUi")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1678362743]
 visible = false
@@ -27,3 +29,5 @@ shape = SubResource("CapsuleShape3D_pbmp0")
 
 [node name="Rogue" parent="." unique_id=497761451 instance=ExtResource("2_mjcdy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.95, 0)
+
+[node name="InventoryUi" parent="." unique_id=1648606664 instance=ExtResource("3_u46th")]

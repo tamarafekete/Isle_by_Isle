@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://df7w21shehmwo"]
 
+[ext_resource type="Texture2D" uid="uid://v3ch8jxtkeu6" path="res://assets/items/materials/wild_rose_256.png" id="1_hshi1"]
 [ext_resource type="Script" uid="uid://dkra7b0uot2cs" path="res://features/inventory/ItemData.cs" id="1_ywhkp"]
 
 [resource]
 script = ExtResource("1_ywhkp")
 Name = "Wild Flower"
+Icon = ExtResource("1_hshi1")
 metadata/_custom_type_script = "uid://dkra7b0uot2cs"

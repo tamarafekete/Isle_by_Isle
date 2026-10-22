@@ -81,7 +81,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 
 	public string GetPrompt()
 	{
-		return _isRespawning ? "" : $"Press E to gather ({Data.ResourceName})";
+		return _isRespawning ? "" : $"Press E to gather ({Data.ItemGiven.Name})";
 	}
 	
 	protected virtual void BodyEntered(Node3D body)
