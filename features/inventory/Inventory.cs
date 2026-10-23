@@ -7,7 +7,6 @@ public partial class Inventory : GodotObject
 {
     public List<InventorySlot> Slots { get; set; }
     [Signal] public delegate void InventoryChangedEventHandler();
-    
     public Inventory(int size)
     {
         Slots = new List<InventorySlot>(size);
@@ -15,6 +14,10 @@ public partial class Inventory : GodotObject
         {
             Slots.Add(new InventorySlot());
         }
+    }
+
+    public Inventory()
+    {
     }
 
     public int AddItem(ItemData item, int count)
@@ -32,6 +35,7 @@ public partial class Inventory : GodotObject
         }
 
         EmitSignal(SignalName.InventoryChanged);
+        
         return remaining;
     }
 

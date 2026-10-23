@@ -8,7 +8,8 @@ script = ExtResource("1_getqq")
 ItemGiven = ExtResource("1_xdohv")
 ToolType = 1
 HitsRequired = Dictionary[int, int]({
-0: 6
+0: 6,
+1: 4
 })
 AmountGiven = 3
 RespawnSeconds = 20.0

@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace IslebyIsle.features.inventory;
 
@@ -10,10 +9,12 @@ public partial class SlotUi : Panel
 	[Export] public TextureRect BackgroundTexture;
 	[Export] public Texture2D ActiveTexture;
 	[Export] public Texture2D InactiveTexture;
+	public InventorySlot Slot { get; set; }
 	private bool _active = false;
 
 	public void UpdateDisplay(InventorySlot slot)
 	{
+		Slot = slot;
 		if (slot.IsEmpty)
 		{
 			IconTexture.Hide();

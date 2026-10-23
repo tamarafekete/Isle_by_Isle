@@ -13,7 +13,7 @@ public partial class Player : CharacterBody3D
 	[Export]
 	public Node3D CameraRig { get; set; }
 
-	public Tool EquippedTool { get; set; } = new Tool();
+	public ToolData EquippedToolData;
 	public readonly List<IInteractable> NearbyInteractables = new();
 	[Export] public Label InteractionLabel;
 	[Export] public Label ErrorLabel;
@@ -33,6 +33,7 @@ public partial class Player : CharacterBody3D
 		_errorTimer.WaitTime = Constants.ErrorMessageLasts;
 		InventoryUi.Initialize(Inventory);
 		InventoryUi.InventoryPanel.Visible = false;
+		EquippedToolData = InventoryUi.GetActiveTool();
 	}
 
 	private void ToggleInventory(bool toggle = true)
@@ -120,6 +121,7 @@ public partial class Player : CharacterBody3D
 			if (Input.IsKeyPressed(i))
 			{
 				InventoryUi.SetActive((int)i - (int)Key.Key1);
+				EquippedToolData = InventoryUi.GetActiveTool();
 			}
 		}
 

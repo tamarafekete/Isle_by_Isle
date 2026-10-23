@@ -1,4 +1,5 @@
 using Godot;
+using IslebyIsle.features.interaction;
 
 
 namespace IslebyIsle.features.inventory;
@@ -10,11 +11,16 @@ public partial class InventoryUi : Control
 	[Export] public GridContainer HotBarContainer;
 	[Export] public PanelContainer InventoryPanel;
 	[Export] public PackedScene SlotScene;
+	[Export] public ItemData HardcodedItem;
 	private int _active = 0;
 
 	public void Initialize(Inventory inventory)
 	{
 		TargetInventory = inventory;
+		if (HardcodedItem != null)
+		{
+			TargetInventory.AddItem(HardcodedItem, 28);
+		}
 		TargetInventory.InventoryChanged += RefreshAll;
 		RefreshAll();
 	}
@@ -56,5 +62,15 @@ public partial class InventoryUi : Control
 		}
 
 		HotBarContainer.GetChild<SlotUi>(_active).SetActive(true);
+	}
+
+	public ToolData GetActiveTool()
+	{
+		var activeItem = HotBarContainer.GetChild<SlotUi>(_active);
+		if (activeItem.Slot.Item is ToolData activeTool)
+		{
+			return activeTool;
+		}
+		return new ToolData();
 	}
 }
