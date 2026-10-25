@@ -32,25 +32,30 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 	{
 		if (!_isRespawning && player != null)
 		{
-			if(Data.ToolType != ToolType.None && player.EquippedTool.Type != Data.ToolType)
+			if(Data.ToolType != ToolType.None && player.EquippedToolData.ToolType != Data.ToolType && Data.MinToolTier != ToolTier.Hand)
 			{
 				player.WriteError("Can't interact with other tools");
 				return;
 			}
+			
+			ToolTier tier = Data.ToolType == player.EquippedToolData.ToolType ? player.EquippedToolData.Tier  : ToolTier.Hand;
 
-			if (player.EquippedTool.Tier < Data.MinToolTier)
+			if (tier < Data.MinToolTier)
 			{
 				player.WriteError("Tool is not strong enough");
 				return;
 			}
 
-			if (Data.HitsRequired.TryGetValue(player.EquippedTool.Tier, out var hitNeeded))
+			if (Data.HitsRequired.TryGetValue(tier, out var hitNeeded))
 			{
 				_hitsRemaining-=(Constants.FullProgress/hitNeeded);
 				if (_hitsRemaining <= 0)
 				{
 					GD.Print("You got the resource");
-					player.Inventory.AddItem(Data.ItemGiven, Data.AmountGiven);
+					if (player.Inventory.AddItem(Data.ItemGiven, Data.AmountGiven) > 0)
+					{
+						player.WriteError("Inventory Full");
+					}
 					player.Inventory.PrintInventory();
 					OnHarvested();
 					_isRespawning = true;
@@ -59,7 +64,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 			}
 			else
 			{
-				player.WriteError($"No hit data configured for tier {player.EquippedTool.Tier}");
+				player.WriteError($"No hit data configured for tier {player.EquippedToolData.Tier}");
 			}
 			
 		}
@@ -81,7 +86,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 
 	public string GetPrompt()
 	{
-		return _isRespawning ? "" : $"Press E to gather ({Data.ResourceName})";
+		return _isRespawning ? "" : $"Press E to gather ({Data.ItemGiven.Name})";
 	}
 	
 	protected virtual void BodyEntered(Node3D body)
