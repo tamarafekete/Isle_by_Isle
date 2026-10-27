@@ -19,7 +19,7 @@ public partial class InventoryUi : Control
 		TargetInventory = inventory;
 		if (HardcodedItem != null)
 		{
-			TargetInventory.AddItem(HardcodedItem, 28);
+			TargetInventory.AddItem(HardcodedItem, 1);
 		}
 		TargetInventory.InventoryChanged += RefreshAll;
 		RefreshAll();

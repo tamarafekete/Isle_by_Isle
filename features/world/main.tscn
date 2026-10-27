@@ -1,24 +1,23 @@
 [gd_scene format=3 uid="uid://dph08l3p03jjj"]
 
 [ext_resource type="PackedScene" uid="uid://tu1fnmgq5qpr" path="res://features/player/Player.tscn" id="1_5dtan"]
+[ext_resource type="PackedScene" uid="uid://gymt3dptpmjk" path="res://features/world/sun.tscn" id="1_judxy"]
+[ext_resource type="Script" uid="uid://c4l3poielsylm" path="res://features/world/Sky.cs" id="1_kdunv"]
+[ext_resource type="Material" uid="uid://cgutxuyvjfbju" path="res://data/world/sky_material.tres" id="1_oisjn"]
 [ext_resource type="PackedScene" uid="uid://b1uahqwk5u5wp" path="res://features/world/oak_tree.tscn" id="5_judxy"]
 [ext_resource type="PackedScene" uid="uid://brw7bfrmddj81" path="res://features/world/small_rock.tscn" id="5_kdunv"]
 [ext_resource type="PackedScene" uid="uid://b6n1e0lb4m44" path="res://features/world/wild_flower.tscn" id="5_vix52"]
 [ext_resource type="FontFile" uid="uid://do8aeo1lkksy4" path="res://assets/fonts/Fredoka-VariableFont_wdth,wght.ttf" id="6_judxy"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7x0rq"]
-sky_top_color = Color(0.5294118, 0.80784315, 0.92156863, 1)
-sky_horizon_color = Color(0.65423757, 0.65920794, 0.62008286, 1)
-
 [sub_resource type="Sky" id="Sky_bf5d0"]
-sky_material = SubResource("ProceduralSkyMaterial_7x0rq")
+sky_material = ExtResource("1_oisjn")
 
 [sub_resource type="Environment" id="Environment_4suka"]
 background_mode = 2
 sky = SubResource("Sky_bf5d0")
 ambient_light_source = 3
 ambient_light_color = Color(0.5294118, 0.80784315, 0.92156863, 1)
-ambient_light_energy = 1.36
+ambient_light_energy = 4.43
 reflected_light_source = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dtan"]
@@ -26,10 +25,10 @@ albedo_color = Color(0.3647059, 0.4745098, 0.2627451, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pia53"]
 material = SubResource("StandardMaterial3D_5dtan")
-size = Vector3(12, 0.33720702, 12)
+size = Vector3(20, 0.337, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kplcx"]
-size = Vector3(12, 0.4, 12)
+size = Vector3(20, 0.4, 20)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ncf1b"]
 
@@ -79,12 +78,25 @@ expand_margin_bottom = 1.0
 
 [node name="Main" type="Node" unique_id=260558800]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2054067081]
+[node name="Sky" type="WorldEnvironment" parent="." unique_id=2054067081]
 environment = SubResource("Environment_4suka")
+script = ExtResource("1_kdunv")
+DayTopColor = Color(0.38431373, 0.7137255, 0.9411765, 1)
+DayHorizonColor = Color(0.83137256, 0.9254902, 0.96862745, 1)
+DayBottomColor = Color(0.6117647, 0.78039217, 0.85490197, 1)
+DawnTopColor = Color(0.49019608, 0.5254902, 0.7882353, 1)
+DawnHorizonColor = Color(1, 0.7019608, 0.5411765, 1)
+DawnBottomColor = Color(0.7254902, 0.5019608, 0.56078434, 1)
+EveningTopColor = Color(0.3647059, 0.2901961, 0.56078434, 1)
+EveningHorizonColor = Color(1, 0.5411765, 0.36078432, 1)
+EveningBottomColor = Color(0.6392157, 0.3529412, 0.41568628, 1)
+NightTopColor = Color(0.16470589, 0.2, 0.4, 1)
+NightHorizonColor = Color(0.2901961, 0.32156864, 0.5647059, 1)
+NightBottomColor = Color(0.13725491, 0.16470589, 0.33333334, 1)
+ProceduralSkyMaterial = ExtResource("1_oisjn")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1089362582]
-transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 0, 0)
-light_color = Color(1, 0.90588236, 0.72156864, 1)
+[node name="Sun" parent="." unique_id=1403100515 instance=ExtResource("1_judxy")]
+shadow_enabled = true
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=70935493]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
