@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolData" format=3 uid="uid://becirjlku1e2m"]
+
+[ext_resource type="Script" uid="uid://l6csd6uvvtgm" path="res://features/interaction/ToolData.cs" id="1_cmejr"]
+[ext_resource type="Texture2D" uid="uid://dcjqolovrwh8j" path="res://assets/items/tools/wooden_axe_256.png" id="1_db861"]
+
+[resource]
+script = ExtResource("1_cmejr")
+Tier = 1
+ToolType = 1
+Name = "Wooden Axe"
+Icon = ExtResource("1_db861")
+Type = 1
+MaxStackSize = 1
+metadata/_custom_type_script = "uid://l6csd6uvvtgm"
