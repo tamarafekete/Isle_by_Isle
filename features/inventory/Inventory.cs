@@ -39,6 +39,19 @@ public partial class Inventory : GodotObject
         return remaining;
     }
 
+    public int RemoveItem(ItemData item, int count)
+    {
+        int remaining = count;
+        InventorySlot slot;
+        while (remaining > 0 && (slot = FindSameItem(item)) != null)
+        {
+            remaining = slot.RemoveItem(item, remaining);
+        }
+        
+        EmitSignalInventoryChanged();
+        return remaining;
+    }
+
     private InventorySlot FindSameItem(ItemData item)
     {
         foreach (InventorySlot slot in Slots)

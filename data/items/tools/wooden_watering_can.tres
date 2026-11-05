@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolData" format=3 uid="uid://pdlpku2vcrfa"]
+
+[ext_resource type="Texture2D" uid="uid://bixglgm1qboct" path="res://assets/items/tools/wooden_watering_can_256.png" id="1_ixqiv"]
+[ext_resource type="Script" uid="uid://l6csd6uvvtgm" path="res://features/interaction/ToolData.cs" id="1_l2k52"]
+
+[resource]
+script = ExtResource("1_l2k52")
+Tier = 1
+ToolType = 4
+Name = "Watering Can"
+Icon = ExtResource("1_ixqiv")
+Type = 1
+MaxStackSize = 1
+metadata/_custom_type_script = "uid://l6csd6uvvtgm"

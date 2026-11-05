@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlantData" format=3 uid="uid://c21qe2ogq86td"]
+
+[ext_resource type="Resource" uid="uid://bbyayoyypwi0a" path="res://data/items/crops/wheat.tres" id="1_0byde"]
+[ext_resource type="Script" uid="uid://dxd26brsnvfot" path="res://features/farming/PlantData.cs" id="1_7o6ue"]
+[ext_resource type="PackedScene" uid="uid://6qcl41opnxal" path="res://assets/wild_plants/Grass_1_D_Singlesided_Color1.gltf" id="2_ta7ol"]
+[ext_resource type="PackedScene" uid="uid://cat25kiet1dba" path="res://assets/wild_plants/mdvl_nature_flowers_01.glb" id="3_ycnka"]
+
+[resource]
+script = ExtResource("1_7o6ue")
+Name = "Wheat"
+StageLengths = Dictionary[int, int]({
+0: 1,
+1: 1
+})
+StageScenes = Dictionary[int, PackedScene]({
+0: ExtResource("2_ta7ol"),
+1: ExtResource("3_ycnka"),
+2: ExtResource("3_ycnka")
+})
+CropData = ExtResource("1_0byde")
+metadata/_custom_type_script = "uid://dxd26brsnvfot"

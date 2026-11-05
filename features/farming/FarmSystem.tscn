@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://b777evap6bhpf"]
+
+[ext_resource type="Script" uid="uid://e2w3trsq5ngd" path="res://features/farming/FarmSystem.cs" id="1_c6ivk"]
+[ext_resource type="PackedScene" uid="uid://cpvu0ogsvspnq" path="res://features/farming/tilled_soil.tscn" id="2_jbgov"]
+[ext_resource type="PackedScene" uid="uid://db7a4rysw7nub" path="res://features/farming/watered_soil.tscn" id="3_jbgov"]
+
+[node name="Node" type="Node" unique_id=510333581]
+script = ExtResource("1_c6ivk")
+TilledSoilScene = ExtResource("2_jbgov")
+WateredSoilScene = ExtResource("3_jbgov")

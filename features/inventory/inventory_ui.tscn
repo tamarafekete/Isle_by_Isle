@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c6petplbdv0jh"]
 
-[ext_resource type="Script" uid="uid://bw8i5b70no7i7" path="res://features/inventory/InventoryUi.cs" id="1_oxdmm"]
+[ext_resource type="Script" uid="uid://c0ttfq204gmy0" path="res://features/inventory/InventoryUi.cs" id="1_oxdmm"]
 [ext_resource type="PackedScene" uid="uid://cv2kakpfm7wce" path="res://features/inventory/slot_ui.tscn" id="2_oxdmm"]
 [ext_resource type="Texture2D" uid="uid://bcl3704g4k78l" path="res://assets/ui_textures/hotbar_bg_552x80.png" id="3_bsn2l"]
-[ext_resource type="Resource" uid="uid://nqv07fuctswm" path="res://data/items/tools/wooden_pickaxe.tres" id="3_fiaj5"]
+[ext_resource type="Resource" uid="uid://8206hbi57px" path="res://data/items/tools/wooden_hoe.tres" id="3_fiaj5"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ncf1b"]
 texture = ExtResource("3_bsn2l")

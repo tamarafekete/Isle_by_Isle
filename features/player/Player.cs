@@ -1,6 +1,7 @@
 using Godot;
 using IslebyIsle.features.interaction;
 using System.Collections.Generic;
+using IslebyIsle.features.farming;
 using IslebyIsle.features.inventory;
 using IslebyIsle.features.world;
 
@@ -14,11 +15,13 @@ public partial class Player : CharacterBody3D
 	public Node3D CameraRig { get; set; }
 
 	public ToolData EquippedToolData;
+	public ItemData EquippedItemData;
 	public readonly List<IInteractable> NearbyInteractables = new();
 	[Export] public Label InteractionLabel;
 	[Export] public Label ErrorLabel;
 	[Export] public ProgressBar GatherProgressBar;
 	private Timer _errorTimer;
+	public FarmSystem FarmSystem { get; set; }
 
 	public Inventory Inventory { get; } = new Inventory(InventoryConstants.HotBarSize + InventoryConstants.BackPackSize);
 	[Export] public InventoryUi InventoryUi { get; set; }
@@ -34,6 +37,8 @@ public partial class Player : CharacterBody3D
 		InventoryUi.Initialize(Inventory);
 		InventoryUi.InventoryPanel.Visible = false;
 		EquippedToolData = InventoryUi.GetActiveTool();
+		FarmSystem = FarmSystem.Instance;
+		Inventory.InventoryChanged += RefreshEquippedItem;
 	}
 
 	private void ToggleInventory(bool toggle = true)
@@ -104,6 +109,40 @@ public partial class Player : CharacterBody3D
 			{
 				GatherProgressBar.Visible = false;
 			}
+			
+			if (Input.IsActionJustPressed("use_farming_tool"))
+			{
+				GD.Print("Hello");
+				var camera = GetViewport().GetCamera3D();
+				var mousePos = GetViewport().GetMousePosition();
+
+				var from = camera.ProjectRayOrigin(mousePos);
+				var to = from + camera.ProjectRayNormal(mousePos) * 1000f;
+
+				var query = PhysicsRayQueryParameters3D.Create(from, to);
+				query.CollisionMask = 1u << 2; // only layer 3, the ground layer
+
+				var result = GetWorld3D().DirectSpaceState.IntersectRay(query);
+				if (result.Count > 0)
+				{
+					Vector3 hit = result["position"].AsVector3();
+					GD.Print($"Clicked ground at x={hit.X}, z={hit.Z}, y={hit.Y}");
+					if (EquippedToolData.ToolType == ToolType.Hoe && GlobalPosition.DistanceTo(hit) <= Constants.MaxInteractDistance)
+					{
+						FarmSystem.Till(hit);
+					}
+					else if (EquippedToolData.ToolType == ToolType.WateringCan &&
+							 GlobalPosition.DistanceTo(hit) <= Constants.MaxInteractDistance)
+					{
+						FarmSystem.Water(hit);
+					} else if (EquippedItemData is SeedData seed && GlobalPosition.DistanceTo(hit) <= Constants.MaxInteractDistance)
+					{
+						FarmSystem.Plant(seed, hit);
+						Inventory.RemoveItem(seed, 1);
+					}
+				
+				}
+			}
 		}
 
 		if (Input.IsActionJustPressed("toggle_inventory"))
@@ -121,7 +160,7 @@ public partial class Player : CharacterBody3D
 			if (Input.IsKeyPressed(i))
 			{
 				InventoryUi.SetActive((int)i - (int)Key.Key1);
-				EquippedToolData = InventoryUi.GetActiveTool();
+				RefreshEquippedItem();
 			}
 		}
 
@@ -167,5 +206,11 @@ public partial class Player : CharacterBody3D
 	private void OnErrorEnded()
 	{
 		ErrorLabel.Text = string.Empty;
+	}
+
+	private void RefreshEquippedItem()
+	{
+		EquippedToolData = InventoryUi.GetActiveTool();
+		EquippedItemData = InventoryUi.GetActiveItem();
 	}
 }

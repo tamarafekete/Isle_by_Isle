@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://brw7bfrmddj81" path="res://features/world/small_rock.tscn" id="5_kdunv"]
 [ext_resource type="PackedScene" uid="uid://b6n1e0lb4m44" path="res://features/world/wild_flower.tscn" id="5_vix52"]
 [ext_resource type="FontFile" uid="uid://do8aeo1lkksy4" path="res://assets/fonts/Fredoka-VariableFont_wdth,wght.ttf" id="6_judxy"]
+[ext_resource type="PackedScene" uid="uid://b777evap6bhpf" path="res://features/farming/FarmSystem.tscn" id="9_pfoje"]
 
 [sub_resource type="Sky" id="Sky_bf5d0"]
 sky_material = ExtResource("1_oisjn")
@@ -110,6 +111,7 @@ size = 12.0
 
 [node name="Ground" type="StaticBody3D" parent="Island" unique_id=1722800117]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+collision_layer = 6
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Island/Ground" unique_id=76065191]
 mesh = SubResource("BoxMesh_pia53")
@@ -125,10 +127,10 @@ ErrorLabel = NodePath("../UI/ErrorLabel")
 GatherProgressBar = NodePath("../UI/GatherProgressBar")
 
 [node name="Wild Flower2" parent="." unique_id=291574329 instance=ExtResource("5_vix52")]
-transform = Transform3D(0.99306595, -0.07925686, 0.086824074, 0.08682408, 0.9924039, -0.087155744, -0.079256855, 0.09408982, 0.9924039, 0, 0.5, 2.399)
+transform = Transform3D(0.99306595, -0.07925686, 0.086824074, 0.08682408, 0.9924039, -0.087155744, -0.079256855, 0.09408982, 0.9924039, -0.28013897, 0.24305868, 3.014734)
 
 [node name="Wild Flower" parent="." unique_id=444647003 instance=ExtResource("5_vix52")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.65, 0.5, -0.679)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3386662, 0.5, -0.9929615)
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1620069469]
 
@@ -175,3 +177,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0.85, -3)
 
 [node name="Small Rock" parent="." unique_id=1963391282 instance=ExtResource("5_kdunv")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -3.137, 0, 3.797)
+
+[node name="FarmSystem" parent="." unique_id=510333581 instance=ExtResource("9_pfoje")]

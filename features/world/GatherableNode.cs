@@ -89,7 +89,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 		return _isRespawning ? "" : $"Press E to gather ({Data.ItemGiven.Name})";
 	}
 	
-	protected virtual void BodyEntered(Node3D body)
+	public virtual void BodyEntered(Node3D body)
 	{
 		if (body is Player player)
 		{
@@ -97,7 +97,7 @@ public abstract partial class GatherableNode : StaticBody3D, IInteractable
 		}
 	}
 	
-	protected virtual void BodyExited(Node3D body)
+	public virtual void BodyExited(Node3D body)
 	{
 		if (body is Player player)
 		{

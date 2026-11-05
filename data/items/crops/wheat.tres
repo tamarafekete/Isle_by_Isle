@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CropData" format=3 uid="uid://bbyayoyypwi0a"]
+
+[ext_resource type="Texture2D" uid="uid://bgv0n03lt6fkf" path="res://assets/items/crops/wheat_256.png" id="1_6652c"]
+[ext_resource type="Script" uid="uid://b2kh6cpbaprnw" path="res://features/farming/CropData.cs" id="2_r5y2o"]
+
+[resource]
+script = ExtResource("2_r5y2o")
+Name = "Wheat"
+Icon = ExtResource("1_6652c")
+Type = 3
+metadata/_custom_type_script = "uid://b2kh6cpbaprnw"

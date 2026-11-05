@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cpvu0ogsvspnq"]
+
+[ext_resource type="Texture2D" uid="uid://b7u64wbpy8itk" path="res://assets/ground_textures/tilled_soil_dry_380.png" id="1_xioj4"]
+
+[node name="Tilled Soil" type="Decal" unique_id=1604416342]
+size = Vector3(0.95, 0.4, 0.95)
+texture_albedo = ExtResource("1_xioj4")
+cull_mask = 1048573

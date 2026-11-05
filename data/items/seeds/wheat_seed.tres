@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SeedData" format=3 uid="uid://dpyomihpi8ih5"]
+
+[ext_resource type="Script" uid="uid://b7yce4c143qxm" path="res://features/farming/SeedData.cs" id="1_mkmoq"]
+[ext_resource type="Texture2D" uid="uid://r1pg0l6wp6gw" path="res://assets/items/seeds/wheat_seed_256.png" id="1_tc656"]
+[ext_resource type="Resource" uid="uid://c21qe2ogq86td" path="res://data/plants/wheat_plant.tres" id="2_6w1ei"]
+
+[resource]
+script = ExtResource("1_mkmoq")
+Plant = ExtResource("2_6w1ei")
+Name = "Wheat seed"
+Icon = ExtResource("1_tc656")
+Type = 2
+metadata/_custom_type_script = "uid://b7yce4c143qxm"

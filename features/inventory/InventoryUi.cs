@@ -1,4 +1,5 @@
 using Godot;
+using IslebyIsle.features.farming;
 using IslebyIsle.features.interaction;
 
 
@@ -21,6 +22,8 @@ public partial class InventoryUi : Control
 		{
 			TargetInventory.AddItem(HardcodedItem, 1);
 		}
+		TargetInventory.AddItem(GD.Load<ToolData>("res://data/items/tools/wooden_watering_can.tres"), 1);
+		TargetInventory.AddItem(GD.Load<SeedData>("res://data/items/seeds/wheat_seed.tres"), 1);
 		TargetInventory.InventoryChanged += RefreshAll;
 		RefreshAll();
 	}
@@ -73,4 +76,11 @@ public partial class InventoryUi : Control
 		}
 		return new ToolData();
 	}
+
+	public ItemData GetActiveItem()
+	{
+		var activeItem = HotBarContainer.GetChild<SlotUi>(_active);
+		return  activeItem.Slot.Item;
+	}
+	
 }

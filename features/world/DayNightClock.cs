@@ -8,12 +8,29 @@ public partial class DayNightClock : Node
     
     private float _timeElapsedToday = WorldConstants.StartOfDayFirst;
     private int _currentDay = 1;
-    public TimeOfDay TimeOfDay = TimeOfDay.Night;
+    public TimeOfDay TimeOfDay;
     public static DayNightClock Instance;
 
     public override void _Ready()
     {
         Instance = this;
+        if (_timeElapsedToday < WorldConstants.Dawn)
+        {
+            TimeOfDay = TimeOfDay.Night;
+        } else if (_timeElapsedToday < WorldConstants.Day)
+        {
+            TimeOfDay = TimeOfDay.Dawn;
+        } else if (_timeElapsedToday < WorldConstants.Evening)
+        {
+            TimeOfDay = TimeOfDay.Day;
+        } else if (_timeElapsedToday < WorldConstants.Night)
+        {
+            TimeOfDay = TimeOfDay.Evening;
+        }
+        else
+        {
+            TimeOfDay = TimeOfDay.Night;
+        }
     }
     
     public override void _Process(double delta)

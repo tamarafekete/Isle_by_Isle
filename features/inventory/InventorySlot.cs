@@ -25,6 +25,19 @@ public partial class InventorySlot
         int remaining = Count -  Item.MaxStackSize;
         Count = Item.MaxStackSize;
         return remaining;
+    }
 
+    public int RemoveItem(ItemData item, int count)
+    {
+        if (Count > count)
+        {
+            Count -= count;
+            return 0;
+        }
+
+        int remaining = count - Count;
+        Count = 0;
+        Item = null;
+        return  remaining;
     }
 }

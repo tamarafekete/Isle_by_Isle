@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://db7a4rysw7nub"]
+
+[ext_resource type="Texture2D" uid="uid://c2baaiyk77pnc" path="res://assets/ground_textures/tilled_soil_wet_380.png" id="1_pamyx"]
+
+[node name="Watered Soil" type="Decal" unique_id=309224968]
+size = Vector3(0.95, 0.4, 0.95)
+texture_albedo = ExtResource("1_pamyx")

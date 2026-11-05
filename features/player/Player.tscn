@@ -11,6 +11,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pbmp0"]
 
 [node name="Player" type="CharacterBody3D" unique_id=30541234 node_paths=PackedStringArray("InventoryUi")]
+collision_mask = 5
 script = ExtResource("1_yrnqm")
 InventoryUi = NodePath("InventoryUi")
 
