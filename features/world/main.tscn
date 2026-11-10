@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://gymt3dptpmjk" path="res://features/world/sun.tscn" id="1_judxy"]
 [ext_resource type="Script" uid="uid://c4l3poielsylm" path="res://features/world/Sky.cs" id="1_kdunv"]
 [ext_resource type="Material" uid="uid://cgutxuyvjfbju" path="res://data/world/sky_material.tres" id="1_oisjn"]
+[ext_resource type="PackedScene" uid="uid://dg13jmdncn1l3" path="res://features/player/camera_rig.tscn" id="4_yh62u"]
 [ext_resource type="PackedScene" uid="uid://b1uahqwk5u5wp" path="res://features/world/oak_tree.tscn" id="5_judxy"]
 [ext_resource type="PackedScene" uid="uid://brw7bfrmddj81" path="res://features/world/small_rock.tscn" id="5_kdunv"]
 [ext_resource type="PackedScene" uid="uid://b6n1e0lb4m44" path="res://features/world/wild_flower.tscn" id="5_vix52"]
@@ -99,13 +100,9 @@ ProceduralSkyMaterial = ExtResource("1_oisjn")
 [node name="Sun" parent="." unique_id=1403100515 instance=ExtResource("1_judxy")]
 shadow_enabled = true
 
-[node name="CameraRig" type="Node3D" parent="." unique_id=70935493]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=726990537]
-transform = Transform3D(1, 0, 0, 0, 0.81915206, 0.57357645, 0, -0.57357645, 0.81915206, 0, 12, 12)
-projection = 1
-size = 12.0
+[node name="CameraRig" parent="." unique_id=2104221591 node_paths=PackedStringArray("Target") instance=ExtResource("4_yh62u")]
+transform = Transform3D(0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.7071067, 0, 0, 0)
+Target = NodePath("../Player")
 
 [node name="Island" type="Node3D" parent="." unique_id=973277527]
 
