@@ -17,9 +17,14 @@ public partial class Player : CharacterBody3D
 	public ToolData EquippedToolData;
 	public ItemData EquippedItemData;
 	public readonly List<IInteractable> NearbyInteractables = new();
+
+	[Export]
+	public Vector3 SpawnPosition;
 	[Export] public Label InteractionLabel;
 	[Export] public Label ErrorLabel;
 	[Export] public ProgressBar GatherProgressBar;
+	[Export] public float SprintMultiplier = 1.6f;
+	[Export] public float JumpVelocity = 4.5f;
 	private Timer _errorTimer;
 	public FarmSystem FarmSystem { get; set; }
 
@@ -49,44 +54,68 @@ public partial class Player : CharacterBody3D
 	
 	public override void _PhysicsProcess(double delta)
 	{
+		float dt = (float)delta;
 		Vector3 velocity = Velocity;
-		
+
 		if (!IsOnFloor())
 		{
-			velocity += GetGravity() * (float)delta;
+			velocity += GetGravity() * dt;
 		}
 
+		Vector3 direction = Vector3.Zero;
 		if (!_inventoryOpen)
 		{
 			Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_up", "move_down");
-			Vector3 direction = new Vector3(inputDir.X, 0, inputDir.Y);
+			direction = new Vector3(inputDir.X, 0, inputDir.Y);
 			if (CameraRig != null)
 			{
 				direction = direction.Rotated(Vector3.Up, CameraRig.Rotation.Y);
 			}
-
 			direction = direction.Normalized();
+
+			
+			
+			float currentSpeed = (!_inventoryOpen && Input.IsActionPressed("sprint"))
+				? Speed * SprintMultiplier
+				: Speed;
+			
+			if (Input.IsActionJustPressed("jump") && IsOnFloor())
+			{
+				velocity.Y = JumpVelocity;
+				currentSpeed /= 2;
+			}
+
 			if (direction != Vector3.Zero)
 			{
-				velocity.X = direction.X * Speed;
-				velocity.Z = direction.Z * Speed;
+				velocity.X = direction.X * currentSpeed;
+				velocity.Z = direction.Z * currentSpeed;
 			}
 			else
 			{
-				velocity.X = Mathf.MoveToward(Velocity.X, 0, Deceleration * (float)delta);
-				velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Deceleration * (float)delta);
+				velocity.X = Mathf.MoveToward(velocity.X, 0, Deceleration * dt);
+				velocity.Z = Mathf.MoveToward(velocity.Z, 0, Deceleration * dt);
 			}
 
 			if (direction.Length() > 0.1f)
 			{
 				float targetAngle = Mathf.Atan2(direction.X, direction.Z);
-				Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, targetAngle, 10f * (float)delta),
-					Rotation.Z);
+				Rotation = new Vector3(Rotation.X, Mathf.LerpAngle(Rotation.Y, targetAngle, 10f * dt), Rotation.Z);
 			}
 
 			Velocity = velocity;
 			MoveAndSlide();
+		}
 
+		
+		
+		if (GlobalPosition.Y < -20f)
+		{
+			GlobalPosition = SpawnPosition;
+			Velocity = Vector3.Zero;
+		}
+
+		if (!_inventoryOpen)
+		{
 			var closestInteractable = GetNearestInteractable();
 			InteractionLabel.Text = closestInteractable?.GetPrompt() ?? "";
 
